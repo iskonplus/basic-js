@@ -1,27 +1,20 @@
 module.exports = class DepthCalculator {
     calculateDepth(arr) {
+
         let result = 0;
-        if (typeof arr === "object") {
-            result += 1
-        }
-    
+
         arr.forEach(el => {
-            if (typeof el === "object") {
-                result += 1;
-                check(el)
-            } 
+            if (Array.isArray(el)) {
+    
+                let newCalculateDepth = this.calculateDepth(el);    
+                if (newCalculateDepth > result) {
+                    result = newCalculateDepth;
+                }
+            }
         });
     
-        function check(el) {
-            el.forEach(el => {
-                if (typeof el === "object") {
-                    result += 1;
-                    check(el)
-                } 
-            })
-        }
-    
-        return result
+        result += 1;
+        return result;
 
     }
 };
